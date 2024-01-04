@@ -52,7 +52,6 @@ const { lang, post, prevPost, nextPost } = Astro.props;
 
 const p = useTranslatedPath(lang);
 
-const type = getPostType(post);
 const { Content } = await post.render();
 const { title, date } = post.data;
 const description = post.data.description || contentToDescription(post.body);
@@ -60,7 +59,7 @@ const toc = parseToc(post.body);
 ---
 
 <Main seo={{ title, description }}>
-  <BaseNav href={p(`/${type}`)} client:visible>
+  <BaseNav href={p(`/`)} client:visible>
     <TableOfContent
       data-animate
       className="mt-[60px] px-2 text-sm md:hidden"
