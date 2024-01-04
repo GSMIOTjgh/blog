@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://bepyan.me/sitemap-index.xml

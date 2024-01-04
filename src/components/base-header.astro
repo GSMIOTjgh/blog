@@ -1,6 +1,4 @@
 ---
-import LanguageDropdown from './language-dropdown';
-import ThemeToggle from './theme-toggle';
 
 type Props = {
   title: string;
@@ -14,8 +12,6 @@ const { title } = props;
   <div class="flex items-center">
     <h1 class="-mb-0.5 font-semibold leading-7 text-heading">{title}</h1>
     <div class="ml-auto flex gap-1">
-      <LanguageDropdown client:load {url} />
-      <ThemeToggle client:load />
     </div>
   </div>
   <slot />

@@ -7,9 +7,9 @@ import { BxLinkExternal } from '~/components/ui/icons';
 import { useI18n } from '~/i18n/utils';
 import Main from '~/layouts/main.astro';
 import {
-  getWritingPostInfoList,
-  type PostInfo,
-  sortDateDesc,
+getWritingPostInfoList,
+sortDateDesc,
+type PostInfo,
 } from '~/libs/mdx';
 
 const { lang, p, t } = useI18n(Astro.url);
@@ -30,7 +30,7 @@ const yearList = Object.entries(
 const title = t('nav.writing');
 ---
 
-<Main seo={{ title }} class="font-serif">
+<Main seo={{ title }}>
   <BaseNav href={p('/')} client:visible />
   <BaseHeader {title} />
   <section data-animate class="group my-14">
