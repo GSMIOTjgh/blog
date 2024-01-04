@@ -1,0 +1,126 @@
+---
+import '~/styles/mdx.css';
+
+import { type CollectionEntry } from 'astro:content';
+import { format } from 'date-fns';
+
+import BaseHeader from '~/components/base-header.astro';
+import BaseNav from '~/components/base-nav';
+import CopyRight from '~/components/copy-right.astro';
+import { GiscusSection } from '~/components/giscus';
+import MediumZoomScript from '~/components/medium-zoom-script.astro';
+import TableOfContent from '~/components/table-of-content';
+import type { Language } from '~/i18n/ui';
+import { getLangFromSlug, useTranslatedPath } from '~/i18n/utils';
+import Main from '~/layouts/main.astro';
+import {
+  contentToDescription,
+  getPostCollection,
+  getPostType,
+  isNote,
+  isWriting,
+  parseToc,
+  resolveSlug,
+} from '~/libs/mdx';
+
+export async function getStaticPaths() {
+  const posts = await getPostCollection();
+
+  return posts.map((post, _, list) => {
+    const lang = getLangFromSlug(post.slug);
+
+    const postList = list
+      .filter((item) => {
+        if (isWriting(post)) return isWriting(item);
+        if (isNote(post)) return isNote(item);
+        return true;
+      })
+      .filter((item) => getLangFromSlug(item.slug) === lang);
+    const postIndex = postList.findIndex((item) => item.id === post.id);
+
+    return {
+      params: { slug: resolveSlug(post.slug) },
+      props: {
+        lang,
+        post,
+        prevPost: postList[postIndex + 1],
+        nextPost: postList[postIndex - 1],
+      },
+    };
+  });
+}
+
+type Props = {
+  lang: Language;
+  post: CollectionEntry<'post'>;
+  prevPost: CollectionEntry<'post'>;
+  nextPost: CollectionEntry<'post'>;
+};
+
+const { lang, post, prevPost, nextPost } = Astro.props;
+
+const p = useTranslatedPath(lang);
+
+const type = getPostType(post);
+const { Content } = await post.render();
+const { title, date } = post.data;
+const description = post.data.description || contentToDescription(post.body);
+const toc = parseToc(post.body);
+---
+
+<Main seo={{ title, description }}>
+  <BaseNav href={p(`/${type}`)} client:visible>
+    <TableOfContent
+      data-animate
+      className="mt-[60px] px-2 text-sm md:hidden"
+      toc={toc}
+      client:load
+    />
+  </BaseNav>
+  <BaseHeader {title}>
+    <time class="text-sm text-second">
+      {format(date, 'MMM dd, yyyy')}
+    </time>
+  </BaseHeader>
+  <article data-animate data-animate-speed="fast" class="mdx">
+    <Content />
+  </article>
+  <footer>
+    <CopyRight class="mt-page text-right text-xs" />
+    <hr class="mb-7 mt-4" />
+    <section class="text-tx flex items-stretch justify-between gap-1 text-sm">
+      {
+        !!prevPost && (
+          <a
+            class="group flex flex-col gap-1"
+            href={`/post/${resolveSlug(prevPost.slug)}`}
+          >
+            <div class="text-disabled transition-colors group-hover:text-second">
+              Previous
+            </div>
+            <span class="text-second transition-colors group-hover:text-heading">
+              {prevPost.data.title}
+            </span>
+          </a>
+        )
+      }
+      {
+        !!nextPost && (
+          <a
+            class="group ml-auto flex flex-col gap-1 text-right text-second hover:text-body"
+            href={`/post/${resolveSlug(nextPost.slug)}`}
+          >
+            <div class="text-disabled transition-colors group-hover:text-second">
+              Next
+            </div>
+            <span class="text-second transition-colors group-hover:text-heading">
+              {nextPost.data.title}
+            </span>
+          </a>
+        )
+      }
+    </section>
+    <GiscusSection className="mx-auto mt-20" {lang} client:load />
+  </footer>
+  <MediumZoomScript />
+</Main>
