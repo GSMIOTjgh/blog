@@ -1,0 +1,81 @@
+---
+title: 'fastAPI를 써보자'
+description: '스프링만 하다가 이거 하니까'
+date: 2023-12-28 12:41:26
+draft: false
+tags:
+  - python
+---
+
+# 시작하며
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+```
+
+다음은 fastAPI의 기초 예제이다.
+
+1. FastAPI를 불러오고,
+2. FastAPI 인스턴스를 생성한다.
+3. GET 메소드의 "/" 경로로 동작할 것이라고 설정하고,
+4. 요청을 하면 Hello World로 반환한다.
+
+## 와!!! 기본적으로 swagger가 있어요
+
+따로 무슨 설정을 할 필요없이 API 문서를 "/docs"에서 확인할 수 있습니다.
+
+## 파라미터 받아오기
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+
+@app.get("/items/{item_id}")
+async def root(item_id: int):
+    return {"item_id": f"{item_id}"}
+```
+
+대괄호를 사용해서 변수를 받아올 수도 있습니다.
+
+## request body
+
+```python
+class Model(BaseModel):
+    title: str
+    description: str | None = None
+
+@app.get("/post")
+async def submit_post(model: Model):
+    return {"model": model}
+```
+
+다음과 같이 받아올 body의 형태를 정의하고,
+파라미터에 넣어주면 성공적으로 받아올 수 있습니다.
+
+```json
+{
+	"title": "응~"
+}
+```
+
+이런식으로 요청을 보내보면
+
+```json
+{
+	"model": {
+		"title": "응~",
+		"description": null
+	}
+}
+```
+
+이렇게 응답이 오는 것을 볼 수 있습니다.
