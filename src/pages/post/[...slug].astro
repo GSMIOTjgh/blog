@@ -6,7 +6,6 @@ import { format } from 'date-fns';
 
 import BaseHeader from '~/components/base-header.astro';
 import BaseNav from '~/components/base-nav';
-import CopyRight from '~/components/copy-right.astro';
 import { GiscusSection } from '~/components/giscus';
 import MediumZoomScript from '~/components/medium-zoom-script.astro';
 import TableOfContent from '~/components/table-of-content';
@@ -14,13 +13,13 @@ import type { Language } from '~/i18n/ui';
 import { getLangFromSlug, useTranslatedPath } from '~/i18n/utils';
 import Main from '~/layouts/main.astro';
 import {
-  contentToDescription,
-  getPostCollection,
-  getPostType,
-  isNote,
-  isWriting,
-  parseToc,
-  resolveSlug,
+contentToDescription,
+getPostCollection,
+getPostType,
+isNote,
+isWriting,
+parseToc,
+resolveSlug,
 } from '~/libs/mdx';
 
 export async function getStaticPaths() {
@@ -86,7 +85,6 @@ const toc = parseToc(post.body);
     <Content />
   </article>
   <footer>
-    <CopyRight class="mt-page text-right text-xs" />
     <hr class="mb-7 mt-4" />
     <section class="text-tx flex items-stretch justify-between gap-1 text-sm">
       {
@@ -108,7 +106,7 @@ const toc = parseToc(post.body);
         !!nextPost && (
           <a
             class="group ml-auto flex flex-col gap-1 text-right text-second hover:text-body"
-            href={`/post/${resolveSlug(nextPost.slug)}`}
+            href={`/${resolveSlug(nextPost.slug)}`}
           >
             <div class="text-disabled transition-colors group-hover:text-second">
               Next

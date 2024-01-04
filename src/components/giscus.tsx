@@ -35,10 +35,10 @@ export const GiscusSection = (
 
     const giscusAttributes = {
       src: 'https://giscus.app/client.js',
-      'data-repo': 'bepyan/bepyan.me.v2',
-      'data-repo-id': 'R_kgDOKUQR3A',
+      'data-repo': 'enbraining/blog',
+      'data-repo-id': 'R_kgDOK-DjFQ',
       'data-category': 'General',
-      'data-category-id': 'DIC_kwDOKUQR3M4CbE1x',
+      'data-category-id': 'DIC_kwDOK-DjFc4CcL0v',
       'data-mapping': 'pathname',
       'data-strict': '0',
       'data-reactions-enabled': '1',

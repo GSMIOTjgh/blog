@@ -10,8 +10,6 @@ export const ui = {
   en: {
     '404.desc': '관련된 문서를 찾을 수 없습니다.',
     'nav.title': '나의 공간',
-    'nav.writing': 'Today',
-    'nav.writing.desc': '오늘은 무엇을 배웠나',
     'nav.note': 'Archive',
     'nav.note.desc': '필요할 때 꺼내보는',
     'nav.craft': '공방',

@@ -9,7 +9,7 @@ import { getPostInfoList, type PostInfo } from '~/libs/mdx';
 
 const { lang, p, t } = useI18n(Astro.url);
 
-const allNotes = await getPostInfoList('note');
+const allNotes = await getPostInfoList();
 
 const yearList = Object.entries(
   allNotes

@@ -1,6 +1,5 @@
-import { type CollectionEntry, getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-import { externalWritings } from '~/content/_constants';
 import type { Language } from '~/i18n/ui';
 import { getLangFromSlug } from '~/i18n/utils';
 
@@ -103,14 +102,6 @@ export const getPostInfoList = async (
 export const getWritingPostInfoList = async (): Promise<PostInfo[]> => {
   const postList: PostInfo[] = [
     ...(await getPostInfoList('writing')),
-    ...externalWritings.map<PostInfo>((post) => ({
-      title: post.title,
-      description: post.description,
-      href: post.link,
-      date: post.date,
-      isExternal: true,
-      lang: getLangFromSlug(post.link),
-    })),
   ];
 
   return postList.sort(sortDateDesc);

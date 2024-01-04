@@ -1,4 +1,6 @@
 ---
+import { format } from 'date-fns';
+
 import BaseHeader from '~/components/base-header.astro';
 import {
 EmailIcon,
@@ -8,10 +10,27 @@ TwitterXIcon,
 } from '~/components/ui/icons';
 import { useI18n } from '~/i18n/utils';
 import Main from '~/layouts/main.astro';
+import { getPostInfoList, type PostInfo } from '~/libs/mdx';
 
 const { url } = Astro;
 const { p, t } = useI18n(url);
+
+const allNotes = await getPostInfoList();
+
+const yearList = Object.entries(
+  allNotes
+    .reduce<{ [year: string]: PostInfo[] }>((ac, v) => {
+      const year = new Date(v.date).getFullYear();
+      if (!ac[year]) ac[year] = [];
+      ac[year].push(v);
+      return ac;
+    }, {}),
+).sort(([yearA], [yearB]) => +yearB - +yearA);
+
+const title = t('nav.note');
 ---
+
+
 
 <Main>
   <BaseHeader title={`Don't stop`} />
@@ -55,7 +74,7 @@ const { p, t } = useI18n(url);
     <div class="my-14 flex gap-7">
       <div data-animate class="flex flex-col gap-1">
         {
-          (['writing', 'note'] as const).map((item) => (
+          (['note'] as const).map((item) => (
             <div style="--lv-wait: 2;">
               <a class="link font-bold" href={p(`/${item}`)}>
                 {t(`nav.${item}`)}
@@ -67,4 +86,30 @@ const { p, t } = useI18n(url);
       </div>
     </div>
   </div>
+  {
+    yearList.map(([year, postList], index) => {
+      return (
+        <div class="relative">
+          <ul data-animate data-animate-speed="fast" class="space-y-2">
+            <h3>{year}</h3>
+            {postList.map((post) => {
+              return (
+                <li style={`--start: ${index * 75}ms;`}>
+                  <a
+                    href={post.href}
+                    class="flex items-center transition-opacity duration-300 hover:!opacity-100 group-hover:opacity-60"
+                  >
+                    <span class="text-heading">{post.title}</span>
+                    <span class="flex-shrink-0 px-2 text-sm text-second">
+                      {format(new Date(post.date), 'MM. dd.')}
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      );
+    })
+  }
 </Main>
