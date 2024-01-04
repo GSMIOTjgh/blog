@@ -71,20 +71,6 @@ const title = t('nav.note');
         </a>
       </div>
     </div>
-    <div class="my-14 flex gap-7">
-      <div data-animate class="flex flex-col gap-1">
-        {
-          (['note'] as const).map((item) => (
-            <div style="--lv-wait: 2;">
-              <a class="link font-bold" href={p(`/${item}`)}>
-                {t(`nav.${item}`)}
-              </a>
-              <span class="ml-3 text-sm">{t(`nav.${item}.desc`)}</span>
-            </div>
-          ))
-        }
-      </div>
-    </div>
   </div>
   {
     yearList.map(([year, postList], index) => {
