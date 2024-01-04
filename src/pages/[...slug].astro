@@ -15,9 +15,6 @@ import Main from '~/layouts/main.astro';
 import {
 contentToDescription,
 getPostCollection,
-getPostType,
-isNote,
-isWriting,
 parseToc,
 resolveSlug,
 } from '~/libs/mdx';
@@ -29,11 +26,6 @@ export async function getStaticPaths() {
     const lang = getLangFromSlug(post.slug);
 
     const postList = list
-      .filter((item) => {
-        if (isWriting(post)) return isWriting(item);
-        if (isNote(post)) return isNote(item);
-        return true;
-      })
       .filter((item) => getLangFromSlug(item.slug) === lang);
     const postIndex = postList.findIndex((item) => item.id === post.id);
 
