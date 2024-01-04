@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 import type { Language } from '~/i18n/ui';
+import { getLangFromSlug } from '~/i18n/utils';
 
 import { isDev } from './utils';
 
@@ -76,6 +77,27 @@ export type PostInfo = {
   date: string | Date;
   lang: Language;
   isExternal?: boolean;
+};
+
+export const getPostInfoList = async () => {
+  const posts = await getPostCollection();
+
+  return posts
+    .map<PostInfo>((post) => ({
+      title: post.data.title,
+      description: post.data.description,
+      href: `/post/${resolveSlug(post.slug)}`,
+      date: post.data.date,
+      lang: getLangFromSlug(post.slug),
+    }));
+};
+
+export const getWritingPostInfoList = async (): Promise<PostInfo[]> => {
+  const postList: PostInfo[] = [
+    ...(await getPostInfoList()),
+  ];
+
+  return postList.sort(sortDateDesc);
 };
 
 /** table-of-content */
