@@ -3,28 +3,8 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import type { Language } from '~/i18n/ui';
 import { getLangFromSlug } from '~/i18n/utils';
 
-import { isDev } from './utils';
 
 /** utils */
-
-export const isDraft = (post: CollectionEntry<'post'>) => {
-  return isDev || !post.data.draft;
-};
-
-export const isWriting = (post: { slug: string }) => {
-  return post.slug.includes('/writing/');
-};
-
-export const isNote = (post: { slug: string }) => {
-  return post.slug.includes('/note/');
-};
-
-export const getPostType = (post: { slug: string }) => {
-  if (isWriting(post)) return 'writing';
-  if (isNote(post)) return 'note';
-
-  Error('post slug is invalid...');
-};
 
 // 최신순
 export const sortCollectionDateDesc = (
@@ -66,7 +46,6 @@ export const resolveSlug = (slug: string) => {
 /** 전체 글 정보 */
 export const getPostCollection = async () => {
   return (await getCollection('post'))
-    .filter(isDraft)
     .sort(sortCollectionDateDesc);
 };
 
@@ -86,7 +65,7 @@ export const getPostInfoList = async () => {
     .map<PostInfo>((post) => ({
       title: post.data.title,
       description: post.data.description,
-      href: `/post/${resolveSlug(post.slug)}`,
+      href: `/${resolveSlug(post.slug)}`,
       date: post.data.date,
       lang: getLangFromSlug(post.slug),
     }));
