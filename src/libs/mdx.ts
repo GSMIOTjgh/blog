@@ -1,7 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 import type { Language } from '~/i18n/ui';
-import { getLangFromSlug } from '~/i18n/utils';
 
 import { isDev } from './utils';
 
@@ -54,10 +53,10 @@ export const sortCollectionDateAsc = (
  * @example en/note/svelte-useEffect -> en/svelte-useEffect
  */
 export const resolveSlug = (slug: string) => {
-  let result = slug.replace('/writing', '').replace('/note', '');
+  let result = slug.replace('/', '');
 
-  if (slug.startsWith('ko/')) {
-    result = result.replace('ko/', '');
+  if (slug.startsWith('/')) {
+    result = result.replace('/', '');
   }
 
   return result;
@@ -77,34 +76,6 @@ export type PostInfo = {
   date: string | Date;
   lang: Language;
   isExternal?: boolean;
-};
-
-export const getPostInfoList = async (
-  type: 'all' | 'writing' | 'note' = 'all',
-) => {
-  const posts = await getPostCollection();
-
-  return posts
-    .filter((post) => {
-      if (type === 'writing') return isWriting(post);
-      if (type === 'note') return isNote(post);
-      return true;
-    })
-    .map<PostInfo>((post) => ({
-      title: post.data.title,
-      description: post.data.description,
-      href: `/post/${resolveSlug(post.slug)}`,
-      date: post.data.date,
-      lang: getLangFromSlug(post.slug),
-    }));
-};
-
-export const getWritingPostInfoList = async (): Promise<PostInfo[]> => {
-  const postList: PostInfo[] = [
-    ...(await getPostInfoList('writing')),
-  ];
-
-  return postList.sort(sortDateDesc);
 };
 
 /** table-of-content */
