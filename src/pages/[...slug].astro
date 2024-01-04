@@ -91,7 +91,7 @@ const toc = parseToc(post.body);
         !!prevPost && (
           <a
             class="group flex flex-col gap-1"
-            href={`/post/${resolveSlug(prevPost.slug)}`}
+            href={`/${resolveSlug(prevPost.slug)}`}
           >
             <div class="text-disabled transition-colors group-hover:text-second">
               Previous
