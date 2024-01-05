@@ -23,10 +23,9 @@ export default defineConfig({
   integrations: [
     sitemap({
       i18n: {
-        defaultLocale: 'ko',
+        defaultLocale: 'en',
         locales: {
-          ko: 'ko',
-          en: 'en',
+          en: 'en'
         },
       },
     }),
