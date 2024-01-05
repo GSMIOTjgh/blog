@@ -74,8 +74,8 @@ const yearList = Object.entries(
     yearList.map(([year, postList], index) => {
       return (
         <div class="relative">
-          <ul data-animate data-animate-speed="fast" class="space-y-4">
-            <h3>{year}</h3>
+          <ul data-animate data-animate-speed="fast" class="space-y-2">
+            <h3 class="pt-5">{year}</h3>
             {postList.map((post) => {
               return (
                 <li style={`--start: ${index * 75}ms;`}>
@@ -91,7 +91,6 @@ const yearList = Object.entries(
                 </li>
               );
             })}
-            -
           </ul>
         </div>
       );
