@@ -1,0 +1,23 @@
+---
+title: 'Cloudflare 1.1.1.1 사용하기'
+description: '빠른가..?'
+date: 2024-01-05 11:09:00
+draft: false
+tags:
+  - DNS
+  - cloudflare
+---
+
+# 1.1.1.1
+
+Cloudflare(이하 CF)에서 운영하는 공용 DNS 확인자로, 빠르고 비공개인 인터넷 검색 방법을 제공합니다. 대부분의 DNS 확인자와는 달리 1.1.1.1은 사용자 데이터를 광고주에게 판매하지 않습니다.또한 1.1.1.1은 사용 가능한 가장 빠른 DNS 확인자인 것으로 측정되었습니다.
+
+[Cloudflare](https://www.cloudflare.com/ko-kr/learning/dns/what-is-1.1.1.1/)
+
+속도가 빠르다고 하지만 환경에 따라 다르고 체감할 수 없을 수도 있습니다.
+
+![](https://www.cloudflare.com/img/learning/dns/what-is-1.1.1.1/query-speed.png)
+
+# WARP
+
+1.1.1.1 위에 구축된 앱으로, 클라이언트와 상호작용하는 서비스 간에 보안 연결을 생성합니다. 1.1.1.1은 DNS 쿼리만 보호하지만, WARP는 모든 트래픽을 보호한다고 합니다.
