@@ -13,12 +13,6 @@ import remarkGfm from 'remark-gfm';
 // https://astro.build/config
 /** @type {import('astro/config').defineConfig} */
 export default defineConfig({
-  output: 'server',
-  adapter: vercel({
-    webAnalytics: {
-      enabled: true,
-    },
-  }),
   site: 'https://enbraining.com',
   integrations: [
     sitemap({
