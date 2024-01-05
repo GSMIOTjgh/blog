@@ -123,6 +123,7 @@
   b,
   strong {
     @apply font-bold text-body;
+    color: #07d92d
   }
 
   em {
