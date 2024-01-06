@@ -28,10 +28,8 @@ const yearList = Object.entries(
 ).sort(([yearA], [yearB]) => +yearB - +yearA);
 ---
 
-
-
 <Main>
-  <BaseHeader title={`Don't stop`} />
+  <BaseHeader title={'don\'t stop'} />
   <div data-animate data-animate-speed="slow">
     <div class="my-7" set:html={t('index.desc')} />
     <div class="my-7">

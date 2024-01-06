@@ -1,0 +1,58 @@
+---
+title: 'Armeria를 써보자'
+description: '라인~'
+date: 2024-01-06 22:28:00
+draft: false
+tags:
+  - framework
+---
+
+# 아르메리아는?
+
+라인에서 개발한 아르메리아는 어느 상황에서나 적합한 마이크로서비스 프레임워크로 gRPC, Spring, Retrofit 등의
+기술과 같이 활용하여 모든 유형의 마이크로서비스를 구축할 수 있다고 합니다.
+
+## 구성
+
+- Java 21
+- Armeria 1.26.4
+
+## 시작하기
+
+1. 아르메리아 의존성 추가
+
+아르메리아를 사용하기 위해서 의존성을 추가해주었습니다.
+
+```
+dependencies {
+  implementation("com.linecorp.armeria:armeria:1.18.0")
+  testImplementation("org.jetbrains.kotlin:kotlin-test")
+}
+```
+
+간단하게 두개만 있는 코틀린 프로젝트입니다.
+
+2. 서버 실행하기
+
+8080 포트로 서버를 열고 `/`로 GET 요청을 보냈을 때 why를 성공적으로 반환합니다.
+
+```kotlin
+import com.linecorp.armeria.common.HttpResponse
+import com.linecorp.armeria.server.HttpService
+import com.linecorp.armeria.server.Server
+
+fun main(){
+    val server = newServer(8080)
+    server.closeOnJvmShutdown();
+    server.start().join();
+}
+
+fun newServer(port: Int): Server {
+    var builder = Server.builder()
+    return builder.http(port)
+        .service("/", HttpService { ctx, req ->
+            HttpResponse.of("why")
+        })
+        .build() 
+}
+```
