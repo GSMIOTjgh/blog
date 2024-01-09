@@ -8,4 +8,4 @@ ______________________
 
 제가 수정해서 점점 저의 것으로 만드는 것이 목표입니다.
 
-코드 제공을 해준 친구 : [enbraining](https://github.com/enbraining "target=blank")
+코드 제공을 해준 친구 : [enbraining](https://github.com/enbraining)
